@@ -1,4 +1,6 @@
 
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Scanner;
 
 //import java.io.OutputStream;
@@ -42,11 +44,9 @@ public class hangMan{
 		
 	}
 	
-	
-
-	
 	void levelPrinter() {
 		Scanner in = new Scanner(System.in);
+		HashSet<String> hs = new HashSet<>();
 		while(badGuess<=5 && goodGuess!=s1.length()) {
 			
 			System.out.println("\nGuess a letter: ");
@@ -62,7 +62,14 @@ public class hangMan{
 				goodGuess++;
 			}
 			else {
+				if (hs.contains(input)) System.out.println("You've already tried that letter");
+				hs.add(input);
 				
+				Iterator<String> i = hs.iterator();
+				System.out.println("Letters you've tried: ");
+				while(i.hasNext()) {
+					System.out.print(i.next() + " ");
+				}
 				badGuess++;
 				if (badGuess==1) Level2();
 				if (badGuess==2) Level3();
@@ -86,8 +93,9 @@ public class hangMan{
 	}
 	
 	
+	
 	void Level1() {
-		System.out.println(" +----+\r\n" + 
+		System.out.println(" \n+----+\r\n" + 
 				" |    |\r\n" + 
 				"      |\r\n" + 
 				"      |\r\n" + 
@@ -96,7 +104,7 @@ public class hangMan{
 				"=========");
 	}
 	void Level2() {
-		System.out.println(" +---+\r\n" + 
+		System.out.println(" \n+---+\r\n" + 
 				"  |   |\r\n" + 
 				"  O   |\r\n" + 
 				"      |\r\n" + 
@@ -105,7 +113,7 @@ public class hangMan{
 				"=========");
 	}
 	void Level3() {
-		System.out.println(" +---+\r\n" + 
+		System.out.println(" \n+---+\r\n" + 
 				"  |   |\r\n" + 
 				"  O   |\r\n" + 
 				"  |   |\r\n" + 
@@ -114,7 +122,7 @@ public class hangMan{
 				"=========");
 	}
 	void Level4() {
-		System.out.println("  +---+\r\n" + 
+		System.out.println("  \n+---+\r\n" + 
 				"  |   |\r\n" + 
 				"  O   |\r\n" + 
 				" /|   |\r\n" + 
@@ -134,7 +142,7 @@ public class hangMan{
 				"");
 	}
 	void Level6() {
-		System.out.println(" +---+\r\n" + 
+		System.out.println(" \n+---+\r\n" + 
 				"  |   |\r\n" + 
 				"  O   |\r\n" + 
 				" /|\\  |\r\n" + 
