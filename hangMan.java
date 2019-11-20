@@ -2,12 +2,13 @@
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Scanner;
+import java.util.Random;
 
 //import java.io.OutputStream;
 
 
 public class hangMan{
-	private String s1 = "bagel";
+	private String s1;
 	private int badGuess = 0;
 	private int goodGuess = 0;
 	private String input;
@@ -15,8 +16,31 @@ public class hangMan{
 	private int ind = 0;
 	private char[] charArr;
 	private char c;
+	private int diff;
+	
+	public static final Random RANDOM = new Random();
+	public static final String[] EASY = {"bagel", "change", "panic", "vista", "shard", "gnome", "magma"};
+	public static final String[] MEDIUM = {"abruptly", "bachelor", "cabinets", "daughter", "egyptian"};
+	public static final String[] HARD = {"artichokes", "binoculars", "blacksmith", "chivalrous"};
+	
+	private String newWord() {
+		if (diff==1)
+			return EASY[RANDOM.nextInt(EASY.length)];
+		if(diff==2)
+			return MEDIUM[RANDOM.nextInt(MEDIUM.length)];
+		
+		return HARD[RANDOM.nextInt(HARD.length)];
+		
+
+	}
 	
 	hangMan(){
+		Scanner in = new Scanner(System.in);
+		System.out.println("Select Difficulty");
+		System.out.println("1. EASY\n2. MEDIUM\n3. HARD");
+		diff = in.nextInt();
+		s1 = newWord();
+
 		System.out.println(" +----+\r\n" + 
 				" |    |\r\n" + 
 				"      |\r\n" + 
@@ -59,17 +83,23 @@ public class hangMan{
 				}
 				else charArr[s1.indexOf(input)] = c;
 				System.out.println(charArr);
+				
+				if(hs.contains(input)) {
+					System.out.println("You've already tried that letter");
+				}
+				else {
+				hs.add(input);
 				goodGuess++;
+				}
+				//old_input = c;
+				
 			}
 			else {
 				if (hs.contains(input)) System.out.println("You've already tried that letter");
 				hs.add(input);
 				
 				Iterator<String> i = hs.iterator();
-				System.out.println("Letters you've tried: ");
-				while(i.hasNext()) {
-					System.out.print(i.next() + " ");
-				}
+				
 				badGuess++;
 				if (badGuess==1) Level2();
 				if (badGuess==2) Level3();
@@ -80,7 +110,14 @@ public class hangMan{
 					Level7();
 					End();			
 					}
+				
 				System.out.println(charArr);
+				System.out.println();
+
+				System.out.println("Letters you've tried: ");
+				while(i.hasNext()) {
+					System.out.print(i.next() + " ");
+				}
 				
 			}
 	
